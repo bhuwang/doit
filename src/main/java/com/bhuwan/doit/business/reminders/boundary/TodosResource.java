@@ -10,6 +10,7 @@ import java.net.URI;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,7 +31,7 @@ import javax.ws.rs.core.UriInfo;
 @Produces(MediaType.APPLICATION_JSON)
 @Stateless
 public class TodosResource {
-    
+
     @Inject
     ToDoManager manager;
 
@@ -49,15 +50,27 @@ public class TodosResource {
     public Response save(ToDo todo, @Context UriInfo info) {
         ToDo saved = manager.save(todo);
         long id = saved.getId();
-        URI uri = info.getAbsolutePathBuilder().path("/"+id).build();
+        URI uri = info.getAbsolutePathBuilder().path("/" + id).build();
         return Response.created(uri).build();
     }
-    
+
     @PUT
     @Path("{id}")
     public ToDo update(@PathParam("id") long id, ToDo todo) {
         todo.setId(id);
         return manager.save(todo);
+    }
+
+    @PUT
+    @Path("{id}/status")
+    public Response updateStatus(@PathParam("id") long id, JsonObject statusUpdate) {
+        boolean done = statusUpdate.getBoolean("done");
+        ToDo todo = manager.updateStatus(id, done);
+        if (todo == null) {
+            return Response.status(Response.Status.BAD_REQUEST).header("reason", "todo with id " + id + " doesn't exist").build();
+        }else{
+            return Response.ok(todo).build();
+        }
     }
 
     @DELETE
