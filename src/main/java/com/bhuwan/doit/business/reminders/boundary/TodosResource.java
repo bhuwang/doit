@@ -35,10 +35,9 @@ public class TodosResource {
     @Inject
     ToDoManager manager;
 
-    @GET
     @Path("{id}")
-    public ToDo find(@PathParam("id") long id) {
-        return manager.findById(id);
+    public ToDoResource getResourceWithParamId(@PathParam("id") long id) {
+        return new ToDoResource(id, manager);
     }
 
     @GET
@@ -52,30 +51,5 @@ public class TodosResource {
         long id = saved.getId();
         URI uri = info.getAbsolutePathBuilder().path("/" + id).build();
         return Response.created(uri).build();
-    }
-
-    @PUT
-    @Path("{id}")
-    public ToDo update(@PathParam("id") long id, ToDo todo) {
-        todo.setId(id);
-        return manager.save(todo);
-    }
-
-    @PUT
-    @Path("{id}/status")
-    public Response updateStatus(@PathParam("id") long id, JsonObject statusUpdate) {
-        boolean done = statusUpdate.getBoolean("done");
-        ToDo todo = manager.updateStatus(id, done);
-        if (todo == null) {
-            return Response.status(Response.Status.BAD_REQUEST).header("reason", "todo with id " + id + " doesn't exist").build();
-        }else{
-            return Response.ok(todo).build();
-        }
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") long id) {
-        manager.removeById(id);
     }
 }
