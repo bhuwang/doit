@@ -37,7 +37,7 @@ public class ToDo implements ValidEntity {
     private long id;
 
     @NotNull
-    @Size(min = 1, max = 256)
+    @Size(min = 2, max = 256)
     private String caption;
     private String description;
     private int priority;
@@ -87,7 +87,18 @@ public class ToDo implements ValidEntity {
         if (this.priority <= 10) {
             return true;
         }
-        return this.description != null;
+        return (this.description != null) && (!this.description.isEmpty());
     }
 
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 }

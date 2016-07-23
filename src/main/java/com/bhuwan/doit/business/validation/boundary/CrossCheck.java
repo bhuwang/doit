@@ -23,7 +23,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CrossCheck {
 
-    String message() default "Cross check failed!";
+    String message() default "If priority >10 then description should not be null.";
 
     Class<?>[] groups() default {};
 

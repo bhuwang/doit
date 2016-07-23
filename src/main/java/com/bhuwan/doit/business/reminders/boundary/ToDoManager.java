@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
 @Interceptors(BoundaryLogger.class)
 public class ToDoManager {
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "com.bhuwan.doit_doit_war_1.0-SNAPSHOTPU")
     EntityManager em;
 
     public void removeById(long id) {
