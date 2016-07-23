@@ -7,6 +7,7 @@ package com.bhuwan.doit.presentation;
 
 import com.bhuwan.doit.business.reminders.boundary.ToDoManager;
 import com.bhuwan.doit.business.reminders.entity.ToDo;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -38,6 +39,10 @@ public class Index {
 
     public ToDo getTodo() {
         return todo;
+    }
+    
+    public List<ToDo> getToDos(){
+        return this.boundary.findAll();
     }
 
     public Object save() {
