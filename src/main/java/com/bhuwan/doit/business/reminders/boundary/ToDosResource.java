@@ -26,7 +26,7 @@ import javax.ws.rs.core.UriInfo;
  * @author bhuwan
  */
 @Path("todos")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 @Stateless
 public class ToDosResource {
 
