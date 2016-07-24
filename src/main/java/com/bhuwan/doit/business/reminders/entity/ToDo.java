@@ -7,7 +7,9 @@ package com.bhuwan.doit.business.reminders.entity;
 
 import com.bhuwan.doit.business.validation.boundary.CrossCheck;
 import com.bhuwan.doit.business.ValidEntity;
+import com.bhuwan.doit.business.monotoring.entity.ToDoAuditor;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -27,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @NamedQuery(name = ToDo.FINDALL, query = "SELECT t from ToDo t")
 @CrossCheck
+@EntityListeners(ToDoAuditor.class)
 public class ToDo implements ValidEntity {
 
     private static final String PREFIX = "com.bhuwan.doit.business.reminders.boundary.";
@@ -101,4 +104,10 @@ public class ToDo implements ValidEntity {
     public void setPriority(int priority) {
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return "ToDo{" + "caption=" + caption + ", description=" + description + ", priority=" + priority + ", done=" + done + '}';
+    }
+    
 }
